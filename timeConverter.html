@@ -12,17 +12,70 @@
     <div id="root"></div>
 </body>
 <script type="text/babel">
-    function App() {
+    function DistanceConverter() {
+        const [numbers, setNumbers] = React.useState(0);
+        let [inverted, setInverted] = React.useState(false);
+        const changeHandler = (event) => {
+            console.log(event.target.value);
+            setNumbers(event.target.value);
+        }
+        const invertHandler = () => {
+            setInverted((current) => !current);
+            setNumbers(0);
+        }
+        const resetValue = () => {
+            setNumbers(0);
+        }
         return (
         <div>
-
-            <h1 className = "header">Converter</h1>
-            <label htmlFor="first">분</label>
-            <input type="text" id="first" /><br />
-            <label htmlFor="second">시간</label>
-            <input type="text" id="second" />
+            <h1 className = "header">Distance Converter from {numbers}</h1>
+            <label htmlFor="first">KM</label>
+            <input type="text" id="first" value={inverted? numbers*1.609 : numbers} onChange = {changeHandler}
+              disabled = {inverted} /><br />
+            <label htmlFor="second">Miles</label>
+            <input type="text" id="second" value={inverted ? numbers : (numbers/1.609).toFixed(3)} onChange = {changeHandler}
+             disabled = {!inverted} />
+            <button onClick = {resetValue}>Reset</button>
+            <button onClick = {invertHandler}>{inverted ? "invert_forward" : "invert_backward" }</button>
         </div>
         );
+    }
+
+    function TimeConverter() {
+        const [numbers, setNumbers] = React.useState(0);
+        let [inverted, setInverted] = React.useState(false);
+        const changeHandler = (event) => {
+            console.log(event.target.value);
+            setNumbers(event.target.value);
+        }
+        const invertHandler = () => {
+            setInverted((current) => !current);
+            setNumbers(0);
+        }
+        const resetValue = () => {
+            setNumbers(0);
+        }
+        return (
+        <div>
+            <h1 className = "header">Time Converter from {numbers}</h1>
+            <label htmlFor="first">분</label>
+            <input type="text" id="first" value={inverted? numbers*60 : numbers} onChange = {changeHandler}
+              disabled = {inverted} /><br />
+            <label htmlFor="second">시간</label>
+            <input type="text" id="second" value={inverted ? numbers : (numbers/60).toFixed(1)} onChange = {changeHandler}
+             disabled = {!inverted} />
+            <button onClick = {resetValue}>Reset</button>
+            <button onClick = {invertHandler}>{inverted ? "invert_forward" : "invert_backward" }</button>
+        </div>
+        );
+    }
+    function App() {
+        return (
+            <div>
+                <DistanceConverter />
+                <TimeConverter />
+            </div>
+        )
     }
     const root = document.getElementById("root");
     ReactDOM.render(<App />, root);
