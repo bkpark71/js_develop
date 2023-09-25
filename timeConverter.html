@@ -70,10 +70,21 @@
         );
     }
     function App() {
+        const [index, setIndex] = React.useState("0");
+        const onChange = (event) => {
+            setIndex(event.target.value);
+        }
         return (
             <div>
-                <DistanceConverter />
-                <TimeConverter />
+                <select value={index} onChange = {onChange}>
+                    <option value="0">Select Unit converter</option>
+                    <option value="1">Distance Converter</option>
+                    <option value="2">Time Converter</option>
+                </select>
+                <hr />
+                {index == "0" ? "Please select unit you want to convert !" : null}
+                {index == "1" ? <DistanceConverter /> : null}
+                {index == "2" ? <TimeConverter /> : null}
             </div>
         )
     }
